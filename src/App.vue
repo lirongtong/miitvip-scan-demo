@@ -81,7 +81,7 @@
             decodeFromImage() {
                 const image = document.getElementById('preview') as HTMLImageElement
                 this.reader.decodeFromImage(image).then((res) => {
-                    this.$Message.destroy()
+                    this.$message.destroy()
                     this.content = res.text
                     this.time = new Date(res.timestamp)
                     this.modalVisible = true
@@ -101,7 +101,8 @@
                     content: '正在识别图片，请稍候 ...',
                     duration: 0
                 })
-                const file = (this.$refs.camera as any).files[0]
+                const files = (this.$refs.camera as any).files
+                const file = files[files.length - 1]
                 const reader = new FileReader()
                 reader.onload = (e: any) => {
                     this.preview = true
