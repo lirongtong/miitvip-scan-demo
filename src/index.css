@@ -19,3 +19,41 @@
     margin: 16px;
     border-radius: 4px;
 }
+
+.result {
+    letter-spacing: 2px;
+}
+
+.ant-modal-title,
+.ant-modal-body p {
+    letter-spacing: 2px;
+}
+
+.photograph {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.ant-btn {
+    border-radius: 4px;
+    letter-spacing: 2px;
+}
+
+.file {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 290px;
+    height: 40px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.preview {
+    width: 320px;
+    border-radius: 8px;
+    margin: 16px;
+}

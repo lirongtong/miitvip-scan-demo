@@ -1,4 +1,129 @@
 <template>
     <a href="https://www.makeit.vip" target="_blank"><img class="logo" alt="Makeit Vip logo" src="./assets/logo.png" /></a>
-    <video class="video" id="video" ref="video"></video>
+    <video class="video" id="video" ref="video" autoplay v-if="!iphone"></video>
+    <div class="photograph" v-if="iphone">
+        <a-button type="danger" size="large">拍照 - 扫描解析二维码 / 条形码</a-button>
+        <input class="file" type="file" ref="camera" capture="camera" accept="image/*" />
+        <img id="preview" alt="preview" v-if="preview" />
+    </div>
+    <a-modal v-model:visible="modalVisible" centered title="温馨提示：扫描解析成功" okText="刷新后再次进行识别操作" cancelText="关闭" @ok="reload" @cancel="cancel">
+        <p>扫描结果：<a :href="text" v-html="text" target="_blank"></a></p>
+        <p>扫描时间：{{ timestamp }}</p>
+    </a-modal>
 </template>
+
+<script lang="ts">
+    import {defineComponent, ref, reactive} from 'vue'
+    import {BrowserMultiFormatReader} from '@zxing/library/esm/browser/BrowserMultiFormatReader'
+
+    const appComponent = defineComponent({
+        
+        setup() {
+            const iphone = ref(false)
+            const errMsg = ref('')
+            const textContext: any = reactive({})
+            const preview = ref(false)
+            const modalVisible = ref(false)
+            const reader = new BrowserMultiFormatReader()
+            return {iphone, errMsg, textContext, preview, modalVisible, reader}
+        },
+
+        methods: {
+            async openCamera() {
+                this.$message.success({
+                    content: '正在尝试拉起摄像头 ...',
+                    duration: 0
+                })
+                if (!navigator.mediaDevices) {
+                    this.$message.destroy()
+                    this.iphone = true
+                    this.$message.success('iPhone 系列手机无权限自动开启摄像头 ...')
+                } else {
+                    this.reader.listVideoInputDevices().then((devices) => {
+                        this.decode(devices[0].deviceId)
+                    }).catch((err) => {
+                        this.errMsg = err
+                        this.$message.destroy()
+                        this.$message.error({
+                            content: err,
+                            duration: 0
+                        })
+                    })
+                }
+            },
+
+            decode(id: any) {
+                this.reader.reset()
+                this.textContext = {}
+                this.$message.destroy()
+                this.$message.success({
+                    content: '正在尝试识别，请对准摄像头 ...',
+                    duration: 0
+                })
+                this.reader.decodeOnceFromVideoDevice(id, 'video').then((res) => {
+                    this.$message.destroy()
+                    this.text = res.text
+                    this.timestamp = new Date(res.timestamp)
+                    this.modalVisible = true
+                }).catch((err) => {
+                    this.$message.destroy()
+                    this.$message.error({
+                        content: '识别失败，请刷新后再次尝试 ...',
+                        duration: 0
+                    })
+                    this.errMsg = err
+                })
+            },
+
+            decodeFromImage() {
+                const image = document.getElementById('image') as HTMLImageElement
+                this.reader.decodeFromImage(image).then((res) => {
+                    this.$Message.destroy()
+                    this.text = res.text
+                    this.timestamp = new Date(res.timestamp)
+                    this.modalVisible = true
+                }).catch((err) => {
+                    this.$message.destroy()
+                    this.$message.error({
+                        content: '识别失败，请刷新后再试',
+                        duration: 0
+                    })
+                    this.errMsg = err
+                })
+            },
+
+            change() {
+                const vm = this
+                vm.$message.success({
+                    content: '正在识别图片，请稍候 ...',
+                    duration: 0
+                })
+                const file = (this.$refs.camera as any).files[0]
+                const reader = new FileReader()
+                reader.onload = (e: any) => {
+                    this.preview = true
+                    vm.$nextTick(() => {
+                        const image = document.getElementById('image') as HTMLInputElement
+                        if (image) image.src = e.target.result
+                        this.decodeFromImage()
+                    })
+                }
+                reader.readAsDataURL(file)
+            },
+
+            reload() {
+                window.location.reload()
+            },
+
+            cancel() {
+                this.$message.success({
+                    content: '上次扫描解析成功，请刷新后再次尝试识别 ...',
+                    duration: 0
+                })
+            }
+        },
+
+        mounted() {this.openCamera()}
+    })
+    export default appComponent
+</script>
