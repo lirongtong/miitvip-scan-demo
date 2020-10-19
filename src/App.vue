@@ -7,8 +7,8 @@
         <img id="preview" alt="preview" v-if="preview" />
     </div>
     <a-modal v-model:visible="modalVisible" centered title="温馨提示：扫描解析成功" okText="刷新后再次进行识别操作" cancelText="关闭" @ok="reload" @cancel="cancel">
-        <p>扫描结果：<a :href="text" v-html="text" target="_blank"></a></p>
-        <p>扫描时间：{{ timestamp }}</p>
+        <p>扫描结果：<a :href="content" target="_blank">{{ content }}</a></p>
+        <p>扫描时间：{{ time }}</p>
     </a-modal>
 </template>
 
@@ -21,11 +21,12 @@
         setup() {
             const iphone = ref(false)
             const errMsg = ref('')
-            const textContext: any = reactive({})
+            const time = ref(null)
+            const content = ref(null)
             const preview = ref(false)
             const modalVisible = ref(false)
             const reader = new BrowserMultiFormatReader()
-            return {iphone, errMsg, textContext, preview, modalVisible, reader}
+            return {iphone, errMsg, time, content, preview, modalVisible, reader}
         },
 
         methods: {
@@ -54,7 +55,6 @@
 
             decode(id: any) {
                 this.reader.reset()
-                this.textContext = {}
                 this.$message.destroy()
                 this.$message.success({
                     content: '正在尝试识别，请对准摄像头 ...',
@@ -62,8 +62,8 @@
                 })
                 this.reader.decodeOnceFromVideoDevice(id, 'video').then((res) => {
                     this.$message.destroy()
-                    this.text = res.text
-                    this.timestamp = new Date(res.timestamp)
+                    this.content = res.text
+                    this.time = new Date(res.timestamp)
                     this.modalVisible = true
                 }).catch((err) => {
                     this.$message.destroy()
@@ -79,8 +79,8 @@
                 const image = document.getElementById('image') as HTMLImageElement
                 this.reader.decodeFromImage(image).then((res) => {
                     this.$Message.destroy()
-                    this.text = res.text
-                    this.timestamp = new Date(res.timestamp)
+                    this.content = res.text
+                    this.time = new Date(res.timestamp)
                     this.modalVisible = true
                 }).catch((err) => {
                     this.$message.destroy()
