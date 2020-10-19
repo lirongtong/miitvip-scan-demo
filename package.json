@@ -1,15 +1,22 @@
 {
-  "name": "a",
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build"
-  },
-  "dependencies": {
-    "vue": "^3.0.0-rc.1"
-  },
-  "devDependencies": {
-    "vite": "^1.0.0-rc.1",
-    "@vue/compiler-sfc": "^3.0.0-rc.1"
-  }
+    "name": "miitvip-scan-demo",
+    "version": "0.1.0",
+    "author": {
+        "url": "https://www.makeit.vip",
+        "name": "lirongtong",
+        "email": "lirongtong@hotmail.com",
+        "github": "https://github.com/lirongtong"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "@zxing/library": "^0.17.1",
+        "vue": "^3.0.0-rc.1"
+    },
+    "devDependencies": {
+        "vite": "^1.0.0-rc.1",
+        "@vue/compiler-sfc": "^3.0.0-rc.1"
+    }
 }

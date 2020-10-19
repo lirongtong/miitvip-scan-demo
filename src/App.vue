@@ -1,15 +1,4 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3.0 + Vite" />
+    <a href="https://www.makeit.vip" target="_blank"><img class="logo" alt="Makeit Vip logo" src="./assets/logo.png" /></a>
+    <video class="video" id="video" ref="video"></video>
 </template>
-
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
