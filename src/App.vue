@@ -79,7 +79,7 @@
             },
 
             decodeFromImage() {
-                const image = document.getElementById('image') as HTMLImageElement
+                const image = document.getElementById('preview') as HTMLImageElement
                 this.reader.decodeFromImage(image).then((res) => {
                     this.$Message.destroy()
                     this.content = res.text
@@ -106,7 +106,7 @@
                 reader.onload = (e: any) => {
                     this.preview = true
                     vm.$nextTick(() => {
-                        const image = document.getElementById('image') as HTMLInputElement
+                        const image = document.getElementById('preview') as HTMLInputElement
                         if (image) image.src = e.target.result
                         this.decodeFromImage()
                     })
