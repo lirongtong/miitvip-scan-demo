@@ -3,7 +3,7 @@
     <video class="video" id="video" ref="video" autoplay v-if="!iphone"></video>
     <div class="photograph" v-if="iphone">
         <a-button type="danger" size="large">拍照 - 扫描解析二维码 / 条形码</a-button>
-        <input class="file" type="file" ref="camera" capture="camera" accept="image/*" />
+        <input class="file" type="file" ref="camera" capture="camera" accept="image/*" @change="change" />
         <img id="preview" alt="preview" v-if="preview" />
     </div>
     <a-modal v-model:visible="modalVisible" centered title="温馨提示：扫描解析成功" okText="刷新后再次进行识别操作" cancelText="关闭" @ok="reload" @cancel="cancel">
@@ -38,7 +38,10 @@
                 if (!navigator.mediaDevices) {
                     this.$message.destroy()
                     this.iphone = true
-                    this.$message.success('iPhone 系列手机无权限自动开启摄像头 ...')
+                    this.$message.success({
+                        content: 'iPhone 其它浏览器无权限自动开启摄像头 ...',
+                        duration: 0
+                    })
                 } else {
                     this.reader.listVideoInputDevices().then((devices) => {
                         this.decode(devices[0].deviceId)
