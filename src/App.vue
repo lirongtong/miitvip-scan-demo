@@ -6,6 +6,7 @@
         <input class="file" type="file" ref="camera" capture="camera" accept="image/*" @change="change" />
         <img id="preview" alt="preview" v-if="preview" />
     </div>
+    {{ log }}
     <a-modal v-model:visible="modalVisible" centered title="温馨提示：扫描解析成功" okText="刷新后再次进行识别操作" cancelText="关闭" @ok="reload" @cancel="cancel">
         <p>扫描结果：<a :href="content" target="_blank">{{ content }}</a></p>
         <p>扫描时间：{{ time }}</p>
@@ -26,7 +27,8 @@
             const preview = ref(false)
             const modalVisible = ref(false)
             const reader = new BrowserMultiFormatReader()
-            return {iphone, errMsg, time, content, preview, modalVisible, reader}
+            const log = ref('')
+            return {iphone, errMsg, time, content, preview, modalVisible, reader, log}
         },
 
         methods: {
@@ -52,10 +54,7 @@
                             })
                         } else {
                             devices.forEach((device) => {
-                                this.$message.success({
-                                    content: `id: ${device.deviceId}\r\nlabel: ${device.label}\r\ntype: ${device.kind}`,
-                                    duration: 0
-                                })
+                                this.log += '\r\n' + `id: ${device.deviceId}\r\nlabel: ${device.label}\r\ntype: ${device.kind}`
                             })
                             this.decode(devices[0].deviceId)
                         }
