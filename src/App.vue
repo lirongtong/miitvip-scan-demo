@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts">
-    import {defineComponent, ref, reactive} from 'vue'
-    import {BrowserMultiFormatReader} from '@zxing/library/esm/browser/BrowserMultiFormatReader'
+    import { defineComponent, ref, reactive } from 'vue'
+    import { BrowserMultiFormatReader } from '@zxing/library/esm/browser/BrowserMultiFormatReader'
 
     export default defineComponent({
         
@@ -44,7 +44,19 @@
                     })
                 } else {
                     this.reader.listVideoInputDevices().then((devices) => {
-                        this.decode(devices[0].deviceId)
+                        if (devices.length <= 0) {
+                            this.$message.destroy();
+                            this.$message.warning({
+                                content: '当前没有可用的摄像头设备 ...',
+                                duration: 0
+                            })
+                        } else {
+                            this.$message.success({
+                                content: devices.map((device) => device.deviceId),
+                                duration: 0
+                            })
+                            this.decode(devices[0].deviceId)
+                        }
                     }).catch((err) => {
                         this.errMsg = err
                         this.$message.destroy()
