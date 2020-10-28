@@ -51,9 +51,11 @@
                                 duration: 0
                             })
                         } else {
-                            this.$message.success({
-                                content: devices.map((device) => device.deviceId),
-                                duration: 0
+                            devices.forEach((device) => {
+                                this.$message.success({
+                                    content: device.deviceId,
+                                    duration: 0
+                                })
                             })
                             this.decode(devices[0].deviceId)
                         }
