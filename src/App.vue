@@ -53,7 +53,7 @@
                         } else {
                             devices.forEach((device) => {
                                 this.$message.success({
-                                    content: device.deviceId,
+                                    content: `id: ${device.deviceId}\r\nlabel: ${device.label}\r\ntype: ${device.kind}`,
                                     duration: 0
                                 })
                             })
