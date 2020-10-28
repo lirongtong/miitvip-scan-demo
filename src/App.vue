@@ -16,7 +16,7 @@
     import {defineComponent, ref, reactive} from 'vue'
     import {BrowserMultiFormatReader} from '@zxing/library/esm/browser/BrowserMultiFormatReader'
 
-    const appComponent = defineComponent({
+    export default defineComponent({
         
         setup() {
             const iphone = ref(false)
@@ -129,5 +129,4 @@
 
         mounted() {this.openCamera()}
     })
-    export default appComponent
 </script>
