@@ -13,13 +13,13 @@
     },
     "dependencies": {
         "@zxing/library": "^0.17.1",
-        "ant-design-vue": "^2.0.0-beta.10",
-        "vue": "^3.0.0-rc.1"
+        "ant-design-vue": "^2.0.0-rc.8",
+        "vue": "^3.0.5"
     },
     "devDependencies": {
-        "@vue/compiler-sfc": "^3.0.0-rc.1",
+        "@vue/compiler-sfc": "^3.0.5",
         "less": "^3.12.2",
         "less-loader": "^7.0.2",
-        "vite": "^1.0.0-rc.1"
+        "vite": "^1.0.0-rc.13"
     }
 }
