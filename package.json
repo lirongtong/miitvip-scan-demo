@@ -12,7 +12,7 @@
         "build": "vite build"
     },
     "dependencies": {
-        "@zxing/library": "^0.17.1",
+        "@zxing/library": "^0.18.3",
         "ant-design-vue": "^2.0.0-rc.8",
         "vue": "^3.0.5"
     },

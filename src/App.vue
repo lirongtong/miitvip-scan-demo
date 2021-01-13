@@ -14,7 +14,7 @@
 
 <script lang="ts">
     import { defineComponent, ref, reactive } from 'vue'
-    import { BrowserMultiFormatReader } from '@zxing/library/esm/browser/BrowserMultiFormatReader'
+    import { BrowserMultiFormatReader } from '@zxing/library'
 
     export default defineComponent({
         
@@ -53,7 +53,10 @@
                         } else {
                             let id = devices[0].deviceId
                             for (let i = 0; i < devices.length; i++) {
-                                if (devices[i].label.indexOf('back') !== -1) {
+                                if (
+                                    devices[i].label.indexOf('back') !== -1 ||
+                                    devices[i].label.indexOf('RGB') !== -1
+                                ) {
                                     id = devices[i].deviceId
                                     break
                                 }
