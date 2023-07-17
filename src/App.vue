@@ -1,5 +1,5 @@
 <template>
-    <a href="https://www.makeit.vip" target="_blank"><img class="logo" alt="Makeit Vip logo" src="https://file.makeit.vip/MIIT/M00/00/00/ajRkHV_pUyOALE2LAAAtlj6Tt_s370.png" /></a>
+    <a href="https://www.makeit.vip" target="_blank"><img class="logo" alt="makeit.vip's logo" src="https://file.makeit.vip/MIITVIP/M00/00/00/K4vDRGPcbmmAG8_sAAAtlj6Tt_s562.png" /></a>
     <video class="video" id="video" ref="video" autoplay v-if="!iphone"></video>
     <div class="photograph" v-if="iphone">
         <a-button type="danger" size="large">拍照 - 扫描解析二维码 / 条形码</a-button>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref, reactive } from 'vue'
+    import { defineComponent, ref } from 'vue'
     import { BrowserMultiFormatReader } from '@zxing/library'
 
     export default defineComponent({
